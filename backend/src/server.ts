@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import basesRouter from "./routes/basesRouter";
 
 const app = express();
 
@@ -23,6 +24,12 @@ app.post("/auth/login", (req, res) => {
         success: false,
         message: "Credenciais inválidas",
     });
+});
+
+app.use("/bases", basesRouter);
+
+app.listen(3000, () => {
+    console.log("API rodando na porta 3000");
 });
 
 app.listen(3000, () => {

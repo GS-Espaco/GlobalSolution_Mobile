@@ -3,9 +3,11 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import Login from "../pages/Login";
 import Main from "../pages/Main";
+import Base from "../pages/Base";
 
 import { useAuth } from "../context/AuthContext";
 import Menu from "../components/Menu";
+import CreateBase from "../pages/CreateBase";
 
 const Stack = createNativeStackNavigator();
 
@@ -20,6 +22,14 @@ function AppStack() {
             <Stack.Screen
                 name="MAIN"
                 component={Main}
+            />
+            <Stack.Screen
+                name="BASE"
+                component={Base}
+            />
+            <Stack.Screen
+                name="CREATEBASE"
+                component={CreateBase}
             />
         </Stack.Navigator>
     );

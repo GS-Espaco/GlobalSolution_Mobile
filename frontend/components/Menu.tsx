@@ -8,7 +8,7 @@ import {
     View,
     StatusBar,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 import { useAuth } from "../context/AuthContext";
 
@@ -23,10 +23,17 @@ export default function Menu() {
         setMenuOpen(false);
     }
 
+    function handleBase() {
+        navigation.navigate("BASE" as never);
+        setMenuOpen(false);
+    }
+
     function handleLogout() {
         logout();
         setMenuOpen(false);
     }
+
+    const route = useRoute()
 
     return (
         <View style={styles.fullMenu}>
@@ -45,6 +52,9 @@ export default function Menu() {
                             color="black"
                         />
                     </TouchableOpacity>
+                    {route.name === "MAIN" ? (<Text style={styles.title}>Home</Text>) : null}
+                    {route.name === "BASE" ? (<Text style={styles.title}>Bases</Text>) : null}
+                    {route.name === "CREATEBASE" ? (<Text style={styles.title}>Cadastrar Base</Text>) : null}
                 </View>
             </View>
 
@@ -54,6 +64,10 @@ export default function Menu() {
                         <Text style={styles.menuText}>Home</Text>
                     </TouchableOpacity>
 
+                    <TouchableOpacity onPress={handleBase}>
+                        <Text style={styles.menuText}>Bases</Text>
+                    </TouchableOpacity>
+                    
                     <TouchableOpacity onPress={handleLogout}>
                         <Text style={styles.menuText}>Sair</Text>
                     </TouchableOpacity>
@@ -94,5 +108,11 @@ const styles = StyleSheet.create({
     menuText: {
         color: "#fff",
         fontSize: 20,
+    },
+    title: {
+        fontSize: 24,
+        fontWeight: "bold",
+        color: "#509778",
+        textTransform: "uppercase"
     },
 });
