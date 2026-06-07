@@ -8,9 +8,9 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 export default function Base() {
 
     const [bases, setBases] = useState<BaseType[]>([]);
-    
+
     const navigation = useNavigation();
-    
+
     function handleCreateBase() {
         navigation.navigate("CREATEBASE" as never);
     }
@@ -36,6 +36,7 @@ export default function Base() {
                 <ScrollView style={styles.baseCardContainer}>
                     {bases.map(base => (
                         <View key={base.id} style={styles.baseCard}>
+                            <View>
                             <Text style={styles.title2}>
                                 Nome: {base.nome}
                             </Text>
@@ -43,6 +44,10 @@ export default function Base() {
                             <Text style={styles.text}>
                                 Localização: {base.localizacao}
                             </Text>
+                            </View>
+                                <TouchableOpacity>
+                                    <Text>🗑️</Text>
+                                </TouchableOpacity>
                         </View>
                     ))}
                     <View>
@@ -95,7 +100,10 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 10,
         elevation: 8,
-        marginBottom: 15
+        marginBottom: 15,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between"
     },
 
     title: {

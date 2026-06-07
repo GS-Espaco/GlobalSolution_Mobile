@@ -56,8 +56,7 @@ export async function createLocal(
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                nome,
-                coordenadas,
+                nome
             }),
         }
     );

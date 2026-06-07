@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import basesRouter from "./routes/basesRouter";
+import locaisRouter from "./routes/locaisRouter"
 
 const app = express();
 
@@ -28,9 +29,7 @@ app.post("/auth/login", (req, res) => {
 
 app.use("/bases", basesRouter);
 
-app.listen(3000, () => {
-    console.log("API rodando na porta 3000");
-});
+app.use("/locais", locaisRouter);
 
 app.listen(3000, () => {
     console.log("API rodando na porta 3000");

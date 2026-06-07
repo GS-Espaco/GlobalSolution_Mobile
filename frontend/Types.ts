@@ -3,3 +3,8 @@ export type BaseType = {
     nome: string;
     localizacao: string;
 };
+
+export type LocalType = {
+    id: number;
+    nome: string;
+};
