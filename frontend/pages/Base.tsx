@@ -4,6 +4,7 @@ import { API_URL } from "../services/api";
 import axios from "axios";
 import { BaseType } from "../Types";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { deleteBase } from "../services/api";
 
 export default function Base() {
 
@@ -13,6 +14,16 @@ export default function Base() {
 
     function handleCreateBase() {
         navigation.navigate("CREATEBASE" as never);
+    }
+
+    async function handleDeleteBase(id: number) {
+        try {
+            await deleteBase(id);
+
+            carregarBases();
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     useFocusEffect(
@@ -37,17 +48,17 @@ export default function Base() {
                     {bases.map(base => (
                         <View key={base.id} style={styles.baseCard}>
                             <View>
-                            <Text style={styles.title2}>
-                                Nome: {base.nome}
-                            </Text>
+                                <Text style={styles.title2}>
+                                    Nome: {base.nome}
+                                </Text>
 
-                            <Text style={styles.text}>
-                                Localização: {base.localizacao}
-                            </Text>
+                                <Text style={styles.text}>
+                                    Localização: {base.localizacao}
+                                </Text>
                             </View>
-                                <TouchableOpacity>
-                                    <Text>🗑️</Text>
-                                </TouchableOpacity>
+                            <TouchableOpacity onPress={() => handleDeleteBase(base.id)}>
+                                <Text>🗑️</Text>
+                            </TouchableOpacity>
                         </View>
                     ))}
                     <View>

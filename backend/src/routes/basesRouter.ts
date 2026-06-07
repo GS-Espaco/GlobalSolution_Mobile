@@ -36,4 +36,27 @@ router.post("/", (req, res) => {
     res.status(201).json(novaBase);
 });
 
+router.delete("/:id", (req, res) => {
+    const id = Number(req.params.id);
+
+    let bases = lerBases();
+
+    const baseExiste = bases.find(base => base.id === id);
+
+    if (!baseExiste) {
+        return res.status(404).json({
+            message: "Base não encontrada"
+        });
+    }
+
+    bases = bases.filter(base => base.id !== id);
+
+    salvarBases(bases);
+
+    res.json({
+        success: true,
+        message: "Base removida com sucesso"
+    });
+});
+
 export default router;

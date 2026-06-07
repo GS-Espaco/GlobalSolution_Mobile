@@ -43,6 +43,17 @@ export async function createBase(
     return response.json();
 }
 
+export async function deleteBase(id: number) {
+    const response = await fetch(
+        `${API_URL}/bases/${id}`,
+        {
+            method: "DELETE",
+        }
+    );
+
+    return response.json();
+}
+
 // Locais
 export async function createLocal(
     nome: string,
