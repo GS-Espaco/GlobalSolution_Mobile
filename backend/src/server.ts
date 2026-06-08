@@ -1,7 +1,7 @@
-import express from "express";
 import cors from "cors";
+import express from "express";
 import basesRouter from "./routes/basesRouter";
-import locaisRouter from "./routes/locaisRouter"
+import locaisRouter from "./routes/locaisRouter";
 
 const app = express();
 

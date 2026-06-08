@@ -2,6 +2,8 @@
   {
     "id": 1,
     "nome": "Exemplo",
-    "localizacao": "Terra"
+    "localizacao": "Terra",
+    "estado": "Normal",
+    "temperatura": 25
   }
 ]

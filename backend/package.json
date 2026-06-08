@@ -9,7 +9,7 @@
     "start": "node dist/server.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Andre Neves RM - 553515, Caio Tominaga RM - 553633, Eduardo Brites RM - 552943, Isabela Barcellos RM - 553746, Thais Gonçalves RM - 553892",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
