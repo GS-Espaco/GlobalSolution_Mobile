@@ -4,10 +4,6 @@ import { useState } from "react";
 import { loginRequest } from "../services/api";
 import { useAuth } from "../context/AuthContext";
 
-import Logo from "../assets/icon.png";
-import Planet1 from "../assets/Planet1.png"
-import Planet2 from "../assets/Planet2.png"
-
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -32,10 +28,10 @@ export default function Login() {
 
     return (
         <View style={styles.container}>
-            <Image source={Planet1} style={styles.planet1} />
-            <Image source={Planet2} style={styles.planet2} />
+            <Image source={require("../assets/Planet1.png")} style={styles.planet1} />
+            <Image source={require("../assets/Planet2.png")} style={styles.planet2} />
             <View style={styles.logoContainer}>
-                <Image source={Logo} style={styles.logo} />
+                <Image source={require("../assets/icon.png")} style={styles.logo} />
             </View>
             <View style={styles.card}>
                 <Text style={styles.title}>Login</Text>

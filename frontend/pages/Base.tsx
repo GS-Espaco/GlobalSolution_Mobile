@@ -4,16 +4,24 @@ import { API_URL } from "../services/api";
 import axios from "axios";
 import { BaseType } from "../Types";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../Types";
 import { deleteBase } from "../services/api";
+
+type NavigationProps = NativeStackNavigationProp<RootStackParamList>;
 
 export default function Base() {
 
     const [bases, setBases] = useState<BaseType[]>([]);
 
-    const navigation = useNavigation();
+    const navigation = useNavigation<NavigationProps>();
 
     function handleCreateBase() {
-        navigation.navigate("CREATEBASE" as never);
+        navigation.navigate("CREATEBASE");
+    }
+
+    function handleGoToBase(id: number) {
+        navigation.navigate("GREENHOUSE", { id });
     }
 
     async function handleDeleteBase(id: number) {
@@ -46,7 +54,10 @@ export default function Base() {
                 <Text style={styles.title}>Cadastrar e gerenciar bases</Text>
                 <ScrollView style={styles.baseCardContainer}>
                     {bases.map(base => (
-                        <View key={base.id} style={styles.baseCard}>
+                        <TouchableOpacity
+                            style={styles.baseCard}
+                            onPress={() => handleGoToBase(base.id)}
+                        >
                             <View>
                                 <Text style={styles.title2}>
                                     Nome: {base.nome}
@@ -59,7 +70,7 @@ export default function Base() {
                             <TouchableOpacity onPress={() => handleDeleteBase(base.id)}>
                                 <Text>🗑️</Text>
                             </TouchableOpacity>
-                        </View>
+                        </TouchableOpacity>
                     ))}
                     <View>
                         <TouchableOpacity

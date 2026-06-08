@@ -11,11 +11,13 @@ import { API_URL, createBase } from "../services/api";
 import axios from "axios";
 import { useFocusEffect } from "@react-navigation/native";
 import { Picker } from "@react-native-picker/picker";
-import { LocalType } from "../Types";
+import { EstadoBase, LocalType } from "../Types";
 
 export default function CreateBase({ navigation }: any) {
     const [nome, setNome] = useState("");
     const [localizacao, setLocalizacao] = useState("");
+    const estado = EstadoBase.NORMAL;
+    const temperatura = 0;
 
     const [locais, setLocais] = useState([]);
 
@@ -28,7 +30,9 @@ export default function CreateBase({ navigation }: any) {
         try {
             await createBase(
                 nome,
-                localizacao
+                localizacao,
+                estado,
+                temperatura,
             );
 
             navigation.goBack();

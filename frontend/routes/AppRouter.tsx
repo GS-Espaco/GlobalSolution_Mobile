@@ -8,8 +8,10 @@ import Base from "../pages/Base";
 import { useAuth } from "../context/AuthContext";
 import Menu from "../components/Menu";
 import CreateBase from "../pages/CreateBase";
+import Estufa from "../pages/Estufa";
+import { RootStackParamList } from "../Types";
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 // Rotas que o usuario logado pode acessar
 function AppStack() {
@@ -30,6 +32,10 @@ function AppStack() {
             <Stack.Screen
                 name="CREATEBASE"
                 component={CreateBase}
+            />
+            <Stack.Screen 
+                name="GREENHOUSE"
+                component={Estufa}
             />
         </Stack.Navigator>
     );

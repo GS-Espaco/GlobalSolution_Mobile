@@ -1,3 +1,5 @@
+import { BaseType } from "../Types";
+
 export const API_URL = "http://192.168.0.3:3000";
 
 export async function loginRequest(
@@ -24,7 +26,9 @@ export async function loginRequest(
 // Bases
 export async function createBase(
     nome: string,
-    localizacao: string
+    localizacao: string,
+    estado: string,
+    temperatura: number,
 ) {
     const response = await fetch(
         `${API_URL}/bases`,
@@ -36,7 +40,37 @@ export async function createBase(
             body: JSON.stringify({
                 nome,
                 localizacao,
+                estado,
+                temperatura
             }),
+        }
+    );
+
+    return response.json();
+}
+
+export async function getBaseById(id: number) {
+    const response = await fetch(
+        `${API_URL}/bases/${id}`,
+    {
+        method: "GET",
+    })
+
+    return response.json();
+}
+
+export async function updateBase(
+    id: number,
+    dados: Partial<BaseType>
+) {
+    const response = await fetch(
+        `${API_URL}/bases/${id}`,
+        {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(dados),
         }
     );
 
