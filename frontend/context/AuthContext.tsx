@@ -1,31 +1,72 @@
-import { createContext, useContext, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {
+    createContext,
+    ReactNode,
+    useContext,
+    useEffect,
+    useState,
+} from "react";
 
 interface AuthContextType {
     isAuthenticated: boolean;
-    login: (token: string) => void;
-    logout: () => void;
+    loading: boolean;
+    login: (token: string) => Promise<void>;
+    logout: () => Promise<void>;
+}
+
+interface AuthProviderProps {
+    children: ReactNode;
 }
 
 const AuthContext = createContext<AuthContextType>(
     {} as AuthContextType
 );
 
-export function AuthProvider({ children }: any) {
+export function AuthProvider({ children }: AuthProviderProps) {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [loading, setLoading] = useState(true);
 
-    function login(token: string) {
-        console.log(token);
-        setIsAuthenticated(true);
+    useEffect(() => {
+        loadUser();
+    }, []);
+
+    async function loadUser() {
+        try {
+            const token = await AsyncStorage.getItem("@token");
+
+            if (token) {
+                setIsAuthenticated(true);
+            }
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setLoading(false);
+        }
     }
 
-    function logout() {
-        setIsAuthenticated(false);
+    async function login(token: string) {
+        try {
+            await AsyncStorage.setItem("@token", token);
+            setIsAuthenticated(true);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async function logout() {
+        try {
+            await AsyncStorage.removeItem("@token");
+            setIsAuthenticated(false);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return (
         <AuthContext.Provider
             value={{
                 isAuthenticated,
+                loading,
                 login,
                 logout,
             }}

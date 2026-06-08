@@ -2,6 +2,13 @@
   "name": "frontend",
   "version": "1.0.0",
   "main": "index.ts",
+  "author": [
+    "Andre Neves RM - 553515", 
+    "Caio Tominaga RM - 553633", 
+    "Eduardo Brites RM - 552943", 
+    "Isabela Barcellos RM - 553746", 
+    "Thais Gonçalves RM - 553892"
+  ],
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
@@ -10,6 +17,7 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^15.1.1",
+    "@react-native-async-storage/async-storage": "^3.1.1",
     "@react-native-picker/picker": "2.11.1",
     "@react-navigation/native": "^7.2.5",
     "@react-navigation/native-stack": "^7.16.0",

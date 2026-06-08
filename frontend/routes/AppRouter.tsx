@@ -1,12 +1,12 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
+import Base from "../pages/Base";
 import Login from "../pages/Login";
 import Main from "../pages/Main";
-import Base from "../pages/Base";
 
-import { useAuth } from "../context/AuthContext";
 import Menu from "../components/Menu";
+import { useAuth } from "../context/AuthContext";
 import CreateBase from "../pages/CreateBase";
 import Estufa from "../pages/Estufa";
 import { RootStackParamList } from "../Types";
@@ -33,7 +33,7 @@ function AppStack() {
                 name="CREATEBASE"
                 component={CreateBase}
             />
-            <Stack.Screen 
+            <Stack.Screen
                 name="GREENHOUSE"
                 component={Estufa}
             />
@@ -42,7 +42,11 @@ function AppStack() {
 }
 
 export default function AppRouter() {
-    const { isAuthenticated } = useAuth();
+    const { isAuthenticated, loading } = useAuth();
+
+    if (loading) {
+        return null;
+    }
 
     return (
         <NavigationContainer>

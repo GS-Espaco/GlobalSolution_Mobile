@@ -1,19 +1,25 @@
 import { useCallback, useState } from "react";
 import {
-    View,
+    StyleSheet,
     Text,
     TextInput,
     TouchableOpacity,
-    StyleSheet
+    View
 } from "react-native";
 
-import { API_URL, createBase } from "../services/api";
-import axios from "axios";
-import { useFocusEffect } from "@react-navigation/native";
 import { Picker } from "@react-native-picker/picker";
-import { EstadoBase, LocalType } from "../Types";
+import { useFocusEffect } from "@react-navigation/native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import axios from "axios";
+import { API_URL, createBase } from "../services/api";
+import { EstadoBase, LocalType, RootStackParamList } from "../Types";
 
-export default function CreateBase({ navigation }: any) {
+type Props = NativeStackScreenProps<
+    RootStackParamList,
+    "CREATEBASE"
+>;
+
+export default function CreateBase({ navigation }: Props) {
     const [nome, setNome] = useState("");
     const [localizacao, setLocalizacao] = useState("");
     const estado = EstadoBase.NORMAL;

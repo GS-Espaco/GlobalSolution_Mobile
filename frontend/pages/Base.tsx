@@ -1,17 +1,17 @@
-import { useCallback, useEffect, useState } from "react";
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { API_URL } from "../services/api";
-import axios from "axios";
-import { BaseType } from "../Types";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../Types";
-import { deleteBase } from "../services/api";
+import axios from "axios";
+import { useCallback, useState } from "react";
+import { ActivityIndicator, FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { BaseType, RootStackParamList } from "../Types";
+import { API_URL, deleteBase } from "../services/api";
 
 type NavigationProps = NativeStackNavigationProp<RootStackParamList>;
 
 export default function Base() {
 
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
     const [bases, setBases] = useState<BaseType[]>([]);
 
     const navigation = useNavigation<NavigationProps>();
@@ -26,11 +26,13 @@ export default function Base() {
 
     async function handleDeleteBase(id: number) {
         try {
-            await deleteBase(id);
+            setError("");
 
+            await deleteBase(id);
             carregarBases();
         } catch (error) {
             console.log(error);
+            setError("Não foi possível excluir a base.");
         }
     }
 
@@ -41,47 +43,71 @@ export default function Base() {
     );
 
     async function carregarBases() {
-        const response = await axios.get(
-            `${API_URL}/bases`
-        );
+        try {
+            setLoading(true);
+            setError("");
 
-        setBases(response.data);
+            const response = await axios.get(`${API_URL}/bases`);
+
+            setBases(response.data);
+        } catch (err) {
+            console.log(err);
+            setError("Não foi possível carregar as bases.");
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    if (loading) {
+        return (
+            <View style={styles.container}>
+                <ActivityIndicator size="large" color="#509778" />
+            </View>
+        );
     }
 
     return (
         <View style={styles.container}>
             <View style={styles.baseContainer}>
                 <Text style={styles.title}>Cadastrar e gerenciar bases</Text>
-                <ScrollView style={styles.baseCardContainer}>
-                    {bases.map(base => (
+
+                {error ? (
+                    <Text style={styles.error}>{error}</Text>
+                ) : null}
+                <FlatList
+                    style={styles.baseCardContainer}
+                    data={bases}
+                    keyExtractor={(item) => item.id.toString()}
+                    renderItem={({ item }) => (
                         <TouchableOpacity
                             style={styles.baseCard}
-                            onPress={() => handleGoToBase(base.id)}
+                            onPress={() => handleGoToBase(item.id)}
                         >
                             <View>
                                 <Text style={styles.title2}>
-                                    Nome: {base.nome}
+                                    Nome: {item.nome}
                                 </Text>
 
                                 <Text style={styles.text}>
-                                    Localização: {base.localizacao}
+                                    Localização: {item.localizacao}
                                 </Text>
                             </View>
-                            <TouchableOpacity onPress={() => handleDeleteBase(base.id)}>
+
+                            <TouchableOpacity
+                                onPress={() => handleDeleteBase(item.id)}
+                            >
                                 <Text>🗑️</Text>
                             </TouchableOpacity>
                         </TouchableOpacity>
-                    ))}
-                    <View>
-                        <TouchableOpacity
-                            style={styles.buttonAdd}
-                            onPress={() => handleCreateBase()}
-                            activeOpacity={0.8}
-                        >
-                            <Text style={styles.buttonText}>+</Text>
-                        </TouchableOpacity>
-                    </View>
-                </ScrollView>
+                    )}
+                />
+                <TouchableOpacity
+                    style={styles.buttonAdd}
+                    onPress={handleCreateBase}
+                    activeOpacity={0.8}
+                >
+                    <Text style={styles.buttonText}>+</Text>
+                </TouchableOpacity>
             </View>
         </View>
     )
@@ -95,6 +121,12 @@ const styles = StyleSheet.create({
         alignItems: "center",
         padding: 24,
         gap: 10
+    },
+
+    error: {
+        color: "#ff7b7b",
+        textAlign: "center",
+        marginBottom: 10,
     },
 
     baseContainer: {
@@ -156,6 +188,8 @@ const styles = StyleSheet.create({
 
     buttonAdd: {
         backgroundColor: "#509778",
+        width: "100%",
+        marginTop: 20,
         paddingVertical: 5,
         paddingHorizontal: 40,
         borderRadius: 12,

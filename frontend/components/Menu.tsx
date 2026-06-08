@@ -1,14 +1,13 @@
 import { MaterialIcons } from "@expo/vector-icons";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { useState } from "react";
 import {
-    Image,
+    StatusBar,
     StyleSheet,
     Text,
     TouchableOpacity,
-    View,
-    StatusBar,
+    View
 } from "react-native";
-import { useNavigation, useRoute } from "@react-navigation/native";
 
 import { useAuth } from "../context/AuthContext";
 

@@ -1,10 +1,10 @@
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { BaseType, EstadoBase, RootStackParamList } from "../Types";
-import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import axios from "axios";
 import { useCallback, useState } from "react";
+import { ActivityIndicator, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { API_URL, updateBase } from "../services/api";
+import { BaseType, EstadoBase, RootStackParamList } from "../Types";
 
 type Props = NativeStackScreenProps<
     RootStackParamList,
@@ -12,6 +12,10 @@ type Props = NativeStackScreenProps<
 >;
 
 export default function Estufa({ route }: Props) {
+
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
+
     const { id } = route.params;
     const [base, setBase] = useState<BaseType>()
 
@@ -22,11 +26,20 @@ export default function Estufa({ route }: Props) {
     );
 
     async function carregarBase() {
-        const response = await axios.get(
-            `${API_URL}/bases/${id}`
-        );
+        try {
+            setLoading(true);
 
-        setBase(response.data);
+            const response = await axios.get(
+                `${API_URL}/bases/${id}`
+            );
+
+            setBase(response.data);
+        } catch (err) {
+            console.log(err);
+            setError("Não foi possivel carregar os dados da base.");
+        } finally {
+            setLoading(false);
+        }
     }
 
     async function mudarTemperatura(valor: number) {
@@ -39,13 +52,19 @@ export default function Estufa({ route }: Props) {
         setBase(baseAtualizada);
     }
 
-    console.log("BASE", base);
+    if (loading) {
+        return (
+            <View style={styles.container}>
+                <ActivityIndicator size="large" color="#509778" />
+            </View>
+        );
+    }
 
     return (
         <View style={styles.container}>
             {base !== undefined ? (
                 <View style={styles.baseContainer}>
-                    <View>
+                    <View style={styles.infoView}>
                         <Text style={styles.text}>
                             Nome: <Text style={styles.value}>{base.nome}</Text>
                         </Text>
@@ -104,11 +123,11 @@ export default function Estufa({ route }: Props) {
                         )}
                     </View>
                 </View>
-            ) : (
-                <View style={styles.baseContainer}>
-                    <Text style={styles.warning}>Problema ao encontrar a base!</Text>
-                </View>
-            )}
+            ) :
+                error ? (
+                    <Text style={styles.error}>{error}</Text>
+                ) : null
+            }
         </View>
     );
 }
@@ -139,10 +158,20 @@ const styles = StyleSheet.create({
         textAlign: "center"
     },
 
+    error: {
+        color: "#ff7b7b",
+        textAlign: "center",
+        marginBottom: 10,
+    },
+
     baseContainer: {
         height: "80%",
         width: "90%",
         justifyContent: "space-between"
+    },
+
+    infoView: {
+        maxHeight: "20%",
     },
 
     button: {

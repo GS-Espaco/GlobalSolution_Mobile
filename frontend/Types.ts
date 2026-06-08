@@ -22,7 +22,7 @@ export enum EstadoBase {
     NORMAL = "Normal",
     TEMPERATURA_ALTA = "Temperatura Alta",
     QUEIMADA = "Queimada",
-    AGUA = "Agua",
+    AGUA = "Aguada",
 }
 
 export type LocalType = {

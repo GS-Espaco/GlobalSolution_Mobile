@@ -1,8 +1,8 @@
-import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image } from "react-native";
 import { useState } from "react";
+import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
-import { loginRequest } from "../services/api";
 import { useAuth } from "../context/AuthContext";
+import { loginRequest } from "../services/api";
 
 export default function Login() {
     const [email, setEmail] = useState("");
@@ -20,7 +20,7 @@ export default function Login() {
         console.log(result)
 
         if (result.success) {
-            login(result.token);
+            await login(result.token);
         } else {
             setError("Email ou senha inválidos.");
         }
