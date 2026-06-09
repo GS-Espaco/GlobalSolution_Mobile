@@ -70,3 +70,12 @@ Depois, dentro do terminal com o frontend rodando escaneie o QR Code com o seu a
 # 4. Importante saber
 
 Dentro do arquivo `frontend/services/api.ts` existe uma variável chamada `API_URL` contendo a rota para a API rodando localmente, se o aplicativo rodar na web (apertando a tecla `w` dentro do terminal do frontend) ele pode permanecer com `http://localhost:3000` ou a porta que o seu backend der, porém, se o aplicativo for executado em outro dispositivo na mesma rede a rota **DEVE** ser composta por `http://[ip]:3000`. Para descobrir o ip basta abrir um terminal e rodar o comando `ipconfig` ele gerará uma lista de ips, pegue o valor do primeiro `IPv4` que aparecer, ele deverá ter o formato `000.000.0.0`
+
+---
+
+# 5. Credenciais para login
+
+Para logar dentro do aplicativo utilize as seguintes credenciais:
+
+email: admin@email.com
+senha: 123456
