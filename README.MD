@@ -14,9 +14,9 @@ Primeiramente, no terminal, clone o repositório com:
 ```bash
   git clone https://github.com/GS-Espaco/GlobalSolution_Mobile.git
 ```
-Abra o projeto `../GLOBALSOLUTION_MOBILE`
+Abra o projeto `../GlobalSolution_Mobile`
 ```bash
-  cd GLOBALSOLUTION_MOBILE
+  cd GlobalSolution_Mobile
 ```
 Logo depois:
 ```bash
@@ -32,9 +32,9 @@ Logo depois:
 ---
 
 # 2.1. Primeiros passos [.zip]
-Extraia o arquivo .zip e no terminal, abra o projeto na pasta raiz `../GLOBALSOLUTION_MOBILE`
+Extraia o arquivo .zip e no terminal, abra o projeto na pasta raiz `../GlobalSolution_Mobile`
 ```bash
-  cd [seu_diretorio]/GLOBALSOLUTION_MOBILE
+  cd [seu_diretorio]/GlobalSolution_Mobile
 ```
 Logo depois:
 ```bash
@@ -51,7 +51,7 @@ Logo depois:
 
 # 3. Como rodar o projeto
 
-Para rodar o projeto basta abrir um terminal na pasta raiz `GLOBALSOLUTION_MOBILE` e executar a seguinte sequência de comandos:
+Para rodar o projeto basta abrir um terminal na pasta raiz `GlobalSolution_Mobile` e executar a seguinte sequência de comandos:
 ```bash
   cd backend
   npm run dev
